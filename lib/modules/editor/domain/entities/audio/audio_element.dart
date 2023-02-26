@@ -1,7 +1,8 @@
 import 'package:equatable/equatable.dart';
+import 'package:mainstack/core/util/element.dart';
 import 'package:mainstack/modules/editor/data/model/audio/audio.dart';
 
-class AudioElementEntity extends Equatable {
+class AudioElementEntity extends Equatable with EditorElements {
   const AudioElementEntity({
     required this.audios,
     required this.hasHeader,

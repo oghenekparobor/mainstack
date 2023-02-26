@@ -2,7 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ElementMenuButtons extends StatelessWidget {
-  const ElementMenuButtons({super.key});
+  const ElementMenuButtons({
+    super.key,
+    this.delete,
+    this.duplicate,
+    this.edit,
+  });
+
+  final VoidCallback? edit;
+  final VoidCallback? duplicate;
+  final VoidCallback? delete;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +28,7 @@ class ElementMenuButtons extends StatelessWidget {
             ),
           ),
           child: IconButton(
-            onPressed: () {},
+            onPressed: edit,
             icon: const Icon(Icons.edit_outlined, color: Colors.grey),
           ),
         ),
@@ -33,7 +42,7 @@ class ElementMenuButtons extends StatelessWidget {
             ),
           ),
           child: IconButton(
-            onPressed: () {},
+            onPressed: duplicate,
             icon: const Icon(Icons.copy_outlined, color: Colors.grey),
           ),
         ),
@@ -47,7 +56,7 @@ class ElementMenuButtons extends StatelessWidget {
             ),
           ),
           child: IconButton(
-            onPressed: () {},
+            onPressed: delete,
             icon: const Icon(Icons.delete_outline, color: Colors.grey),
           ),
         ),

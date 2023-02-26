@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:mainstack/core/util/element.dart';
 import 'package:mainstack/modules/editor/data/model/audio/audio.dart';
 import 'package:mainstack/modules/editor/domain/entities/audio/audio_element.dart';
 

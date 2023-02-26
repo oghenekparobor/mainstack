@@ -1,7 +1,8 @@
 import 'package:equatable/equatable.dart';
+import 'package:mainstack/core/util/element.dart';
 import 'package:mainstack/modules/editor/data/model/pdf/pdf.dart';
 
-class PdfElementEntity extends Equatable {
+class PdfElementEntity extends Equatable with EditorElements {
   const PdfElementEntity({
     required this.content,
     required this.hasHeader,

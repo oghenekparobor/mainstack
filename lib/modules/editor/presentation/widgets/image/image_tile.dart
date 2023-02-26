@@ -1,15 +1,19 @@
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mainstack/config/theme/theme.dart';
+import 'package:mainstack/modules/editor/data/model/image/image.dart';
 
 class ImageTile extends StatelessWidget {
   const ImageTile({
     super.key,
     required this.width,
+    required this.im,
   });
 
   final double width;
+  final ImageModel im;
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +29,11 @@ class ImageTile extends StatelessWidget {
             margin: EdgeInsets.only(bottom: 8.h),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10.r),
-              child: FancyShimmerImage(
-                imageUrl:
-                    'https://qxtravel.org/wp-content/uploads/2020/07/cappadocia-paragliding-price-1.jpg',
+              child: Image.file(
+                File(im.image),
                 height: 200.h,
                 width: double.infinity,
-                boxFit: BoxFit.cover,
+                fit: BoxFit.cover,
               ),
             ),
           ),

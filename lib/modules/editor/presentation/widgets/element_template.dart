@@ -9,10 +9,16 @@ class ElementTemplate extends StatelessWidget {
     super.key,
     required this.child,
     required this.label,
+    this.delete,
+    this.duplicate,
+    this.edit,
   });
 
   final Widget child;
   final String label;
+  final VoidCallback? edit;
+  final VoidCallback? duplicate;
+  final VoidCallback? delete;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +48,11 @@ class ElementTemplate extends StatelessWidget {
           const YSpacer(value: 20),
           child,
           const YSpacer(value: 20),
-          const ElementMenuButtons(),
+          ElementMenuButtons(
+            delete: delete,
+            edit: edit,
+            duplicate: duplicate,
+          ),
           const YSpacer(value: 20),
         ],
       ),

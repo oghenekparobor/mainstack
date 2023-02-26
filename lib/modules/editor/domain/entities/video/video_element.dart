@@ -1,7 +1,8 @@
 import 'package:equatable/equatable.dart';
+import 'package:mainstack/core/util/element.dart';
 import 'package:mainstack/modules/editor/data/model/video/video.dart';
 
-class VideoElementEntity extends Equatable {
+class VideoElementEntity extends Equatable with EditorElements {
   const VideoElementEntity({
     required this.hasHeader,
     required this.id,

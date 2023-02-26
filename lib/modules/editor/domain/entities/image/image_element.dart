@@ -1,7 +1,8 @@
 import 'package:equatable/equatable.dart';
+import 'package:mainstack/core/util/element.dart';
 import 'package:mainstack/modules/editor/data/model/image/image.dart';
 
-class ImageElementEntity extends Equatable {
+class ImageElementEntity extends Equatable with EditorElements {
   const ImageElementEntity({
     required this.desc,
     required this.hasHeader,
