@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:mainstack/modules/editor/domain/entities/social_mdeia.dart';
+import 'package:mainstack/modules/editor/domain/entities/header/social_mdeia.dart';
 
 part 'social_media.g.dart';
 

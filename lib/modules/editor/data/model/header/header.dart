@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:mainstack/modules/editor/data/model/social-media/social_media.dart';
-import 'package:mainstack/modules/editor/domain/entities/header.dart';
+import 'package:mainstack/modules/editor/data/model/header/social-media/social_media.dart';
+import 'package:mainstack/modules/editor/domain/entities/header/header.dart';
 
 part 'header.g.dart';
 

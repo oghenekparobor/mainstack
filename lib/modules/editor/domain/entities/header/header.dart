@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:mainstack/modules/editor/data/model/social-media/social_media.dart';
+import 'package:mainstack/modules/editor/data/model/header/social-media/social_media.dart';
 
 class HeaderEntity extends Equatable {
   const HeaderEntity({
