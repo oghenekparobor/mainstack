@@ -1,10 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:mainstack/core/util/element.dart';
 import 'package:mainstack/modules/editor/domain/entities/text/text.dart';
 
 part 'text.g.dart';
 
 @JsonSerializable()
-class TextModel extends TextEntity {
+class TextModel extends TextEntity with EditorElements {
   const TextModel({
     required super.body,
     required super.header,

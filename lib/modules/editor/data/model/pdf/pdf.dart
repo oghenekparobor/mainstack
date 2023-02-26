@@ -1,10 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:mainstack/core/util/element.dart';
 import 'package:mainstack/modules/editor/domain/entities/pdf/pdf.dart';
 
 part 'pdf.g.dart';
 
 @JsonSerializable()
-class PdfModel extends PdfEntity {
+class PdfModel extends PdfEntity with EditorElements {
   const PdfModel({
     required super.file,
     required super.id,

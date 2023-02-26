@@ -1,10 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:mainstack/core/util/element.dart';
 import 'package:mainstack/modules/editor/domain/entities/video/video.dart';
 
 part 'video.g.dart';
 
 @JsonSerializable()
-class VideoModel extends VideoEntity {
+class VideoModel extends VideoEntity with EditorElements {
   const VideoModel({
     required super.id,
     required super.link,

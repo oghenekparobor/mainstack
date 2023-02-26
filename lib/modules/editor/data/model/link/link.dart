@@ -1,10 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:mainstack/core/util/element.dart';
 import 'package:mainstack/modules/editor/domain/entities/link/link.dart';
 
 part 'link.g.dart';
 
 @JsonSerializable()
-class LinkModel extends LinkEntity {
+class LinkModel extends LinkEntity with EditorElements {
   const LinkModel({
     required super.id,
     required super.link,

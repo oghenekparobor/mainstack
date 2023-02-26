@@ -1,10 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:mainstack/core/util/element.dart';
 import 'package:mainstack/modules/editor/domain/entities/image/image.dart';
 
 part 'image.g.dart';
 
 @JsonSerializable()
-class ImageModel extends ImageEntity {
+class ImageModel extends ImageEntity with EditorElements {
   const ImageModel({
     required super.alt,
     required super.caption,
