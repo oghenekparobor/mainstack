@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mainstack/app/app.dart';
+import 'package:mainstack/config/route/route.dart';
+import 'package:mainstack/core/util/toast.dart';
 import 'package:mainstack/core/widgets/button/outline_button.dart';
 import 'package:mainstack/modules/editor/presentation/widgets/add_template.dart';
 import 'package:mainstack/modules/editor/presentation/widgets/link/add_link_tile.dart';
@@ -11,7 +13,14 @@ class AddLinkElement extends StatelessWidget {
   Widget build(BuildContext context) {
     return AddTemplate(
       label: 'Add link',
-      onTap: () => nav.pop(),
+      onTap: () {
+        nav.popUntil(ModalRoute.withName(Routes.editor));
+
+        MyToast().show(
+          'Element added',
+          error: false,
+        );
+      },
       child: ReorderableListView(
         onReorder: (oldIndex, newIndex) {},
         children: [

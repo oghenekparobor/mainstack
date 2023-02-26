@@ -5,7 +5,7 @@ import 'package:mainstack/modules/editor/domain/entities/link/link.dart';
 part 'link.g.dart';
 
 @JsonSerializable()
-class LinkModel extends LinkEntity with EditorElements {
+class LinkModel extends LinkEntity {
   const LinkModel({
     required super.id,
     required super.link,

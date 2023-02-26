@@ -11,6 +11,8 @@ SocialMediaModel _$SocialMediaModelFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String,
       icon: json['icon'] as String,
       link: json['link'] as String,
+      name: json['name'] as String,
+      position: json['position'] as int,
     );
 
 Map<String, dynamic> _$SocialMediaModelToJson(SocialMediaModel instance) =>
@@ -18,4 +20,6 @@ Map<String, dynamic> _$SocialMediaModelToJson(SocialMediaModel instance) =>
       'id': instance.id,
       'link': instance.link,
       'icon': instance.icon,
+      'name': instance.name,
+      'position': instance.position,
     };

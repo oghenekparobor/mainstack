@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
@@ -14,9 +15,9 @@ class MyToast {
 
   late Timer timer;
 
-  show(l) => toast(l);
+  show(l, {bool error = true}) => toast(l, error: error);
 
-  toast(String message) {
+  toast(String message, {bool error = true}) {
     showDialog(
       context: navKey.currentContext!,
       barrierColor: Colors.transparent,
@@ -47,9 +48,9 @@ class MyToast {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Icon(
-                    Icons.error,
-                    color: Colors.red,
+                  Icon(
+                    error ? Icons.error : Icons.done,
+                    color: error ? Colors.red : Colors.green,
                   ),
                   const XSpacer(),
                   Expanded(
@@ -57,7 +58,7 @@ class MyToast {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Text(
-                          'Error',
+                          error ? 'Error' : 'Success',
                           style: theme.textTheme.bodyMedium,
                         ),
                         Text(

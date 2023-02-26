@@ -5,7 +5,7 @@ import 'package:mainstack/modules/editor/domain/entities/text/text.dart';
 part 'text.g.dart';
 
 @JsonSerializable()
-class TextModel extends TextEntity with EditorElements {
+class TextModel extends TextEntity {
   const TextModel({
     required super.body,
     required super.header,

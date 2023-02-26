@@ -17,7 +17,7 @@ class HeaderEntity extends Equatable {
   final String displayPicture;
   final String displayName;
   final String bio;
-  final String applicableTitle;
+  final List applicableTitle;
   final List<SocialMediaModel> socialMedia;
 
   @override

@@ -1,16 +1,14 @@
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mainstack/config/theme/theme.dart';
-import 'package:mainstack/modules/editor/data/model/header/social-media/social_media.dart';
 
-class HeaderSocialLink extends StatelessWidget {
-  const HeaderSocialLink({
+class MyIcon extends StatelessWidget {
+  const MyIcon({
     super.key,
-    required this.smm,
+    required this.icon,
   });
 
-  final SocialMediaModel smm;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +19,13 @@ class HeaderSocialLink extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: theme.primaryColor,
+        color: theme.primaryColor.withOpacity(.5),
       ),
       padding: const EdgeInsets.all(8),
-      child: FancyShimmerImage(
-        imageUrl: smm.icon,
-        width: 24.w,
-        height: 24.h,
+      child: Icon(
+        icon,
+        size: 13.sp,
+        color: Colors.white,
       ),
     );
   }

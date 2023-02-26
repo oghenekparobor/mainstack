@@ -15,11 +15,7 @@ class AddSocialMedia extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          'Social Media',
-          style: theme.textTheme.titleSmall,
-        ),
-        const YSpacer(),
+       
         for (var i = 0; i < 3; i++)
           Container(
             padding: EdgeInsets.symmetric(
@@ -54,15 +50,7 @@ class AddSocialMedia extends StatelessWidget {
               ),
               children: [
                 const YSpacer(value: 20),
-                MyTextField(
-                  title: 'Username',
-                  focusNode: FocusNode(),
-                  labelSize: 15,
-                  prefix: const Icon(
-                    Icons.tag,
-                    color: Colors.grey,
-                  ),
-                ),
+               
               ],
             ),
           ),

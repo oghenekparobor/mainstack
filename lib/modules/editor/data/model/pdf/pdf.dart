@@ -5,7 +5,7 @@ import 'package:mainstack/modules/editor/domain/entities/pdf/pdf.dart';
 part 'pdf.g.dart';
 
 @JsonSerializable()
-class PdfModel extends PdfEntity with EditorElements {
+class PdfModel extends PdfEntity {
   const PdfModel({
     required super.file,
     required super.id,

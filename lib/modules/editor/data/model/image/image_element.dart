@@ -6,7 +6,7 @@ import 'package:mainstack/modules/editor/domain/entities/image/image_element.dar
 part 'image_element.g.dart';
 
 @JsonSerializable()
-class ImageElementModel extends ImageElementEntity with EditorElements {
+class ImageElementModel extends ImageElementEntity  {
   const ImageElementModel({
     required super.desc,
     required super.hasHeader,

@@ -14,6 +14,9 @@ class MyTextField extends StatelessWidget {
     this.labelSize,
     this.prefix,
     this.radius,
+    this.controller,
+    this.onChanged,
+    this.defaultValue,
   });
 
   final String title;
@@ -24,6 +27,9 @@ class MyTextField extends StatelessWidget {
   final Widget? prefix;
   final int? labelSize;
   final double? radius;
+  final TextEditingController? controller;
+  final Function(String)? onChanged;
+  final String? defaultValue;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +44,9 @@ class MyTextField extends StatelessWidget {
         ),
         const YSpacer(),
         TextField(
+          controller: defaultValue == null
+              ? controller
+              : TextEditingController(text: defaultValue),
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular((radius ?? 10).r),
@@ -50,6 +59,7 @@ class MyTextField extends StatelessWidget {
             fillColor: focusNode.hasFocus ? Colors.white : null,
             prefixIcon: prefix,
           ),
+          onChanged: onChanged,
           maxLines: maxline,
           maxLength: maxlength,
         ),

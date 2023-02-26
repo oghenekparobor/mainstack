@@ -8,10 +8,12 @@ class SubMovableElementTemplate extends StatelessWidget {
     super.key,
     required this.child,
     required this.label,
+    this.onDelete,
   });
 
   final String label;
   final Widget child;
+  final VoidCallback? onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,7 @@ class SubMovableElementTemplate extends StatelessWidget {
               ),
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: onDelete,
               child: const Icon(Icons.delete_outline),
             ),
           ],

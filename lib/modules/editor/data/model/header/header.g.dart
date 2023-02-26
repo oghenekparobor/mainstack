@@ -7,7 +7,7 @@ part of 'header.dart';
 // **************************************************************************
 
 HeaderModel _$HeaderModelFromJson(Map<String, dynamic> json) => HeaderModel(
-      applicableTitle: json['applicableTitle'] as String,
+      applicableTitle: json['applicableTitle'] as List<dynamic>,
       bannerImage: json['bannerImage'] as String?,
       bio: json['bio'] as String,
       displayName: json['displayName'] as String,

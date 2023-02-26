@@ -6,7 +6,7 @@ import 'package:mainstack/modules/editor/domain/entities/pdf/pdf_element.dart';
 part 'pdf_element.g.dart';
 
 @JsonSerializable()
-class PdfElementModel extends PdfElementEntity  with EditorElements{
+class PdfElementModel extends PdfElementEntity {
   const PdfElementModel({
     required super.content,
     required super.hasHeader,

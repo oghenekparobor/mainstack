@@ -5,12 +5,16 @@ class SocialMediaEntity extends Equatable {
     required this.id,
     required this.icon,
     required this.link,
+    required this.name,
+    required this.position,
   });
 
   final String id;
   final String link;
   final String icon;
+  final String name;
+  final int position;
 
   @override
-  List<Object?> get props => [id, link, icon];
+  List<Object?> get props => [id, link, icon, name, position];
 }

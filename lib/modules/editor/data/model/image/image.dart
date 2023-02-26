@@ -5,7 +5,7 @@ import 'package:mainstack/modules/editor/domain/entities/image/image.dart';
 part 'image.g.dart';
 
 @JsonSerializable()
-class ImageModel extends ImageEntity with EditorElements {
+class ImageModel extends ImageEntity  {
   const ImageModel({
     required super.alt,
     required super.caption,

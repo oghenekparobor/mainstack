@@ -5,7 +5,6 @@ import 'package:mainstack/core/widgets/button/outline_button.dart';
 import 'package:mainstack/core/widgets/textfield/textfield.dart';
 import 'package:mainstack/modules/editor/presentation/widgets/add_sub_element.dart';
 import 'package:mainstack/modules/editor/presentation/widgets/add_template.dart';
-import 'package:mainstack/modules/editor/presentation/widgets/header/social_link.dart';
 import 'package:mainstack/modules/editor/presentation/widgets/image/add_header.dart';
 import 'package:mainstack/modules/editor/presentation/widgets/image/select_layout.dart';
 
@@ -39,7 +38,18 @@ class AddImageElement extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const HeaderSocialLink(),
+                        Container(
+                          margin: EdgeInsets.only(
+                            right: 4.w,
+                            bottom: 4.h,
+                          ),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: theme.primaryColor,
+                          ),
+                          padding: const EdgeInsets.all(8),
+                          child: Icon(Icons.image, size: 13.sp),
+                        ),
                         const YSpacer(),
                         Text(
                           'Upload your Image',

@@ -5,7 +5,7 @@ import 'package:mainstack/modules/editor/domain/entities/audio/audio.dart';
 part 'audio.g.dart';
 
 @JsonSerializable()
-class AudioModel extends AudioEntity with EditorElements {
+class AudioModel extends AudioEntity  {
   const AudioModel({
     required super.id,
     required super.link,

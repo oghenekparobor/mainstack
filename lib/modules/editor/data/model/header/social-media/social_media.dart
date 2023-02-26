@@ -9,6 +9,8 @@ class SocialMediaModel extends SocialMediaEntity {
     required super.id,
     required super.icon,
     required super.link,
+    required super.name,
+    required super.position,
   });
 
   factory SocialMediaModel.fromJson(Map<String, dynamic> json) =>

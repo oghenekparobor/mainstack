@@ -5,7 +5,7 @@ import 'package:mainstack/modules/editor/domain/entities/video/video.dart';
 part 'video.g.dart';
 
 @JsonSerializable()
-class VideoModel extends VideoEntity with EditorElements {
+class VideoModel extends VideoEntity {
   const VideoModel({
     required super.id,
     required super.link,

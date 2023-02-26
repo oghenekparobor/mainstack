@@ -1,11 +1,14 @@
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mainstack/app/app.dart';
 import 'package:mainstack/config/theme/theme.dart';
-import 'package:mainstack/core/util/toast.dart';
+import 'package:mainstack/core/constant/list.dart';
 import 'package:mainstack/core/widgets/button/filled_button.dart';
 import 'package:mainstack/core/widgets/spacer/yspacer.dart';
 import 'package:mainstack/core/widgets/textfield/textfield.dart';
+import 'package:mainstack/modules/editor/presentation/notifier-service/header_service.dart';
+import 'package:provider/provider.dart';
 
 class AddLinks extends StatelessWidget {
   const AddLinks({super.key});
@@ -44,33 +47,35 @@ class AddLinks extends StatelessWidget {
           ),
           const YSpacer(value: 20),
           Expanded(
-            child: SingleChildScrollView(
-              physics: const ClampingScrollPhysics(),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  for (var i = 0; i < 13; i++)
-                    ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: const SizedBox(
-                        width: 24,
-                        height: 24,
-                        child: Placeholder(),
-                      ),
-                      title: Text(
-                        'Lorem ipsum',
-                        style: theme.textTheme.bodyMedium,
-                      ),
-                      trailing: Checkbox(
-                        onChanged: (value) {},
-                        value: true,
-                        activeColor: theme.primaryColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.r),
+            child: Consumer<HeaderNotifer>(
+              builder: (_, value, __) => SingleChildScrollView(
+                physics: const ClampingScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    for (var soc in socials)
+                      ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        leading: FancyShimmerImage(
+                          imageUrl: soc['icon'],
+                          width: 24.w,
+                          height: 24.h,
+                        ),
+                        title: Text(
+                          soc['label'],
+                          style: theme.textTheme.bodyMedium,
+                        ),
+                        trailing: Checkbox(
+                          onChanged: (_) => value.addRemoveSocials(soc),
+                          value: value.haveSocials(soc['label']),
+                          activeColor: theme.primaryColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.r),
+                          ),
                         ),
                       ),
-                    )
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -78,9 +83,7 @@ class AddLinks extends StatelessWidget {
           MyFilledButton(
             label: 'Confirm',
             fontSize: 16,
-            onTap: () {
-              MyToast().show('Lorem ipsum is a dummy text');
-            },
+            onTap: () => nav.pop(),
           ),
         ],
       ),

@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mainstack/config/theme/theme.dart';
+import 'package:mainstack/modules/editor/data/model/link/link.dart';
 
 class PreviewLinkElement extends StatelessWidget {
-  const PreviewLinkElement({super.key});
+  const PreviewLinkElement({
+    super.key,
+    required this.lm,
+  });
+
+  final LinkModel lm;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +22,7 @@ class PreviewLinkElement extends StatelessWidget {
       ),
       child: ListTile(
         title: Text(
-          'My Portfolio',
+          lm.title,
           style: theme.textTheme.bodyMedium!.copyWith(
             color: Colors.white,
           ),
