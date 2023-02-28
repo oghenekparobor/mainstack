@@ -20,8 +20,8 @@ class PreviewImageCarousel extends StatelessWidget {
       key: ValueKey('image_element_${iem.id}'),
       width: double.infinity,
       height: 200.h,
-      child: PageView(
-        controller: PageController(viewportFraction: .85),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           if (iem.hasHeader)
             Text(
@@ -34,7 +34,12 @@ class PreviewImageCarousel extends StatelessWidget {
               style: theme.textTheme.bodyLarge,
             ),
           const YSpacer(value: 20),
-          for (var i in iem.images) ImageTile(width: size.width, im: i),
+          PageView(
+            controller: PageController(viewportFraction: .85),
+            children: [
+              for (var i in iem.images) ImageTile(width: size.width, im: i),
+            ],
+          ),
         ],
       ),
     );

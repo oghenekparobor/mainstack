@@ -6,6 +6,7 @@ import 'package:mainstack/core/widgets/button/outline_button.dart';
 import 'package:mainstack/modules/editor/presentation/notifier-service/element_service.dart';
 import 'package:mainstack/modules/editor/presentation/widgets/add_template.dart';
 import 'package:mainstack/modules/editor/presentation/widgets/link/add_link_tile.dart';
+import 'package:mainstack/modules/editor/presentation/widgets/not_draggable.dart';
 import 'package:provider/provider.dart';
 
 class AddLinkElement extends StatelessWidget {
@@ -41,11 +42,13 @@ class AddLinkElement extends StatelessWidget {
             child!,
           ],
         ),
-        child: MyOutlineButton(
+        child: NotDraggable(
           key: const ValueKey('add_link'),
-          label: 'Add links',
-          icon: const Icon(Icons.add, size: 18),
-          onTap: () => es.addLink(),
+          child: MyOutlineButton(
+            label: 'Add links',
+            icon: const Icon(Icons.add, size: 18),
+            onTap: () => es.addLink(),
+          ),
         ),
       ),
     );

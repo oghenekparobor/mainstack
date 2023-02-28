@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mainstack/app/app.dart';
 import 'package:mainstack/config/theme/theme.dart';
 import 'package:mainstack/core/widgets/spacer/yspacer.dart';
+import 'package:mainstack/modules/editor/presentation/notifier-service/element_service.dart';
 
 class SelectImageLayout extends StatefulWidget {
   const SelectImageLayout({super.key});
@@ -13,26 +14,6 @@ class SelectImageLayout extends StatefulWidget {
 }
 
 class _SelectImageLayoutState extends State<SelectImageLayout> {
-  var current = 0;
-
-  List platform = [
-    {
-      'label': 'Single',
-      'icon':
-          'https://customercare.igloosoftware.com/.api2/api/v1/communities/10068556/previews/thumbnails/4fc20722-5368-e911-80d5-b82a72db46f2?width=680&height=680&crop=False',
-    },
-    {
-      'label': 'Grid',
-      'icon':
-          'https://w7.pngwing.com/pngs/648/914/png-transparent-computer-icons-new-york-city-grid-view-%E5%92%96%E5%95%A1%E6%B5%B7%E6%8A%A5%E5%9B%BE%E7%89%87%E7%B4%A0%E6%9D%90-miscellaneous-text-rectangle-thumbnail.png',
-    },
-    {
-      'label': 'Carousel',
-      'icon':
-          'https://www.pngkey.com/png/detail/224-2247480_carousel-photos-comments-carousel-icon-png.png',
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -48,11 +29,11 @@ class _SelectImageLayoutState extends State<SelectImageLayout> {
         const YSpacer(),
         Wrap(
           children: [
-            for (var i = 0; i < platform.length; i++)
+            for (var i = 0; i < es.imgLayouts.length; i++)
               GestureDetector(
                 onTap: () {
                   setState(() {
-                    current = i;
+                    es.selectedLayout = i;
                   });
                 },
                 child: Container(
@@ -60,11 +41,11 @@ class _SelectImageLayoutState extends State<SelectImageLayout> {
                   width: size.width * .24.w,
                   margin: EdgeInsets.only(right: 4.w, left: 4.w, bottom: 8.w),
                   decoration: BoxDecoration(
-                    color: i == current ? Colors.red.shade50 : null,
+                    color: i == es.selectedLayout ? Colors.red.shade50 : null,
                     borderRadius: BorderRadius.circular(10.r),
                     border: Border.all(
                       width: .5.w,
-                      color: i == current
+                      color: i == es.selectedLayout
                           ? Colors.redAccent
                           : Colors.grey.shade300,
                     ),
@@ -73,14 +54,14 @@ class _SelectImageLayoutState extends State<SelectImageLayout> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       FancyShimmerImage(
-                        imageUrl: platform[i]['icon'],
+                        imageUrl: es.imgLayouts[i]['icon'],
                         width: 24.w,
                         height: 24.h,
                         boxFit: BoxFit.contain,
                       ),
                       const YSpacer(value: 2),
                       Text(
-                        platform[i]['label'],
+                        es.imgLayouts[i]['label'],
                         style: theme.textTheme.titleMedium,
                       ),
                     ],

@@ -5,6 +5,7 @@ import 'package:mainstack/core/util/element.dart';
 import 'package:mainstack/core/util/toast.dart';
 import 'package:mainstack/core/util/validator.dart';
 import 'package:mainstack/modules/editor/data/model/audio/audio_element.dart';
+import 'package:mainstack/modules/editor/data/model/image/image.dart';
 import 'package:mainstack/modules/editor/data/model/image/image_element.dart';
 import 'package:mainstack/modules/editor/data/model/link/link.dart';
 import 'package:mainstack/modules/editor/data/model/link/link_element.dart';
@@ -500,6 +501,189 @@ class ElementNotifer with ChangeNotifier {
 
       var items = _videos.removeAt(o);
       _videos.insert(n, items);
+
+      notifyListeners();
+    }
+  }
+
+  // Images
+  int selectedLayout = 0;
+
+  List imgLayouts = [
+    {
+      'label': 'Single',
+      'icon':
+          'https://customercare.igloosoftware.com/.api2/api/v1/communities/10068556/previews/thumbnails/4fc20722-5368-e911-80d5-b82a72db46f2?width=680&height=680&crop=False',
+    },
+    {
+      'label': 'Grid',
+      'icon':
+          'https://w7.pngwing.com/pngs/648/914/png-transparent-computer-icons-new-york-city-grid-view-%E5%92%96%E5%95%A1%E6%B5%B7%E6%8A%A5%E5%9B%BE%E7%89%87%E7%B4%A0%E6%9D%90-miscellaneous-text-rectangle-thumbnail.png',
+    },
+    {
+      'label': 'Carousel',
+      'icon':
+          'https://www.pngkey.com/png/detail/224-2247480_carousel-photos-comments-carousel-icon-png.png',
+    },
+  ];
+  final _images = <ImageModel>[
+    ImageModel(
+      id: uuid.v1(),
+      link: null,
+      position: 0,
+      alt: null,
+      caption: null,
+      image: '',
+    ),
+  ];
+
+  List<ImageModel> get images => _images;
+
+  void addImage() {
+    _images.add(ImageModel(
+      id: uuid.v1(),
+      link: null,
+      position: (_links.length + 1),
+      image: '',
+      alt: null,
+      caption: null,
+    ));
+
+    notifyListeners();
+  }
+
+  void removeImageField(id) {
+    _images.removeWhere((e) => e.id == id);
+
+    notifyListeners();
+  }
+
+  void editImage(List<ImageModel> im) {
+    _images.clear();
+    _images.addAll(im);
+
+    notifyListeners();
+  }
+
+  bool imageHasHeader = false;
+  String imageHeader = '';
+  String imageDesc = '';
+
+  bool validateImage() {
+    if (imageHasHeader && imageHeader.isEmpty) {
+      MyToast().show('Please ensure header is not empty');
+
+      return false;
+    }
+
+    int error = 0;
+
+    if (_images.isEmpty) {
+      return false;
+    } else {
+      if (_images.any((e) => e.image.isEmpty)) {
+        error++;
+        MyToast().show('Please ensure image is not empty');
+      }
+    }
+
+    return (error == 0);
+  }
+
+  void updateImage(var key, var value, id) {
+    var item = _images.firstWhere((e) => e.id == id);
+    var pos = _images.indexOf(item);
+
+    var map = item.toJson();
+    map.update(key, (_) => value);
+
+    _images.removeAt(pos);
+    _images.insert(pos, ImageModel.fromJson(map));
+  }
+
+  void addImageToElements(String? edit) {
+    if (edit != null) {
+      var item = _elements.firstWhere(
+        (e) => (e as ImageElementModel).id == edit,
+      ) as ImageElementModel;
+
+      int pos = _elements.indexOf(item);
+
+      var map = item.toJson();
+
+      var list = [];
+      for (var element in _images) {
+        list.add(element.toJson());
+      }
+
+      map.update('images', (value) => list);
+      map.update(
+        'layout',
+        (value) => imgLayouts[selectedLayout]['label'],
+      );
+      map.update('title', (value) => imageHeader);
+      map.update('hasHeader', (value) => imageHasHeader);
+      map.update('desc', (value) => imageDesc);
+
+      _elements.removeAt(pos);
+      _elements.insert(pos, ImageElementModel.fromJson(map));
+
+      imageHasHeader = false;
+      imageHeader = '';
+      selectedLayout = 0;
+      imageDesc = '';
+
+      _images.clear();
+      addImage();
+
+      notifyListeners();
+    } else {
+      addElement(ImageElementModel(
+        id: uuid.v1(),
+        images: [..._images],
+        layout: imgLayouts[selectedLayout]['label'],
+        hasHeader: imageHasHeader,
+        title: imageHeader,
+        desc: imageDesc,
+      ));
+
+      imageHasHeader = false;
+      imageHeader = '';
+      selectedLayout = 0;
+      imageDesc = '';
+
+      _images.clear();
+      addImage();
+    }
+  }
+
+  void duplicateImage(ImageElementModel lm) {
+    addElement(ImageElementModel(
+      id: uuid.v1(),
+      hasHeader: lm.hasHeader,
+      layout: lm.layout,
+      title: lm.title,
+      images: lm.images,
+      desc: lm.desc,
+    ));
+  }
+
+  void rearrangeImages({
+    required int oldIndex,
+    required int newIndex,
+    required int lenthOfWidgets,
+    required int top,
+    required int bottom,
+  }) {
+    if (newIndex < top || newIndex >= (lenthOfWidgets + (top + bottom))) {
+    } else {
+      var o = (oldIndex - top);
+      var n = (newIndex - top);
+
+      if (n > o) n -= 1;
+
+      var items = _images.removeAt(o);
+      _images.insert(n, items);
 
       notifyListeners();
     }

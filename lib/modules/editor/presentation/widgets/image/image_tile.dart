@@ -42,7 +42,7 @@ class ImageTile extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Text(
-                'Caption',
+                im.caption ?? '',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: theme.textTheme.bodyLarge!.copyWith(

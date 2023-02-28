@@ -15,8 +15,8 @@ class PreviewImageGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      key: ValueKey('image_element_${iem.id}'),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         if (iem.hasHeader)
           Text(
@@ -29,7 +29,12 @@ class PreviewImageGrid extends StatelessWidget {
             style: theme.textTheme.bodyLarge,
           ),
         const YSpacer(value: 20),
-        for (var i in iem.images) ImageTile(width: size.width * .36, im: i),
+        Wrap(
+          key: ValueKey('image_element_${iem.id}'),
+          children: [
+            for (var i in iem.images) ImageTile(width: size.width * .36, im: i),
+          ],
+        )
       ],
     );
   }
