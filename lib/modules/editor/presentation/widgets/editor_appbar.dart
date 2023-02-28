@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:glass/glass.dart';
+import 'package:mainstack/app/app.dart';
+import 'package:mainstack/config/route/route.dart';
 import 'package:mainstack/config/theme/theme.dart';
 import 'package:mainstack/core/widgets/button/filled_button.dart';
 import 'package:mainstack/core/widgets/image/profile_img.dart';
@@ -34,9 +34,12 @@ class EditorAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ],
       ),
-      actions: const [
-        MyFilledButton(label: 'Preview'),
-        XSpacer(),
+      actions: [
+        MyFilledButton(
+          label: 'Preview',
+          onTap: () => nav.pushNamed(Routes.preview),
+        ),
+        const XSpacer(),
       ],
     ).asGlass();
   }

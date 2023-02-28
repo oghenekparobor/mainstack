@@ -30,7 +30,8 @@ class AddLinkElement extends StatelessWidget {
       },
       child: Consumer<ElementNotifer>(
         builder: (context, value, child) => ReorderableListView(
-          onReorder: (oldIndex, newIndex) {},
+          onReorder: (oldIndex, newIndex) =>
+              es.reorderLinks(oldIndex, newIndex),
           children: [
             for (var i in value.links)
               AddLinkTile(

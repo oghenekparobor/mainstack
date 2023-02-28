@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mainstack/modules/editor/presentation/views/home.dart';
+import 'package:mainstack/modules/editor/presentation/views/preview.dart';
 
 class Routes {
   static const String editor = "/";
+  static const String preview = "/preview";
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -10,6 +12,11 @@ class Routes {
         return _getPageRoute(
           settings: settings,
           viewToShow: const EditorHome(),
+        );
+      case preview:
+        return _getPageRoute(
+          settings: settings,
+          viewToShow: const MyPreview(),
         );
 
       default:

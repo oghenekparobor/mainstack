@@ -60,7 +60,7 @@ class MyTextField extends StatelessWidget {
             prefixIcon: prefix,
           ),
           onChanged: onChanged,
-          maxLines: maxline,
+          maxLines: maxline ?? 1,
           maxLength: maxlength,
         ),
       ],

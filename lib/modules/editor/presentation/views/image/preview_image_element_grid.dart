@@ -16,6 +16,7 @@ class PreviewImageGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
+      key: ValueKey('image_element_${iem.id}'),
       children: [
         if (iem.hasHeader)
           Text(

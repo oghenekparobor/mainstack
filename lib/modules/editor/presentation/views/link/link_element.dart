@@ -24,13 +24,7 @@ class LinkElement extends StatelessWidget {
         MyDialog().showDialog(AddLinkElement(edit: lem.id));
       },
       duplicate: () => es.duplicateLinks(lem.links),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          for (var i = 0; i < lem.links.length; i++)
-            PreviewLinkElement(lm: lem.links[i]),
-        ],
-      ),
+      child: PreviewLinkElement(lm: lem.links),
     );
   }
 }

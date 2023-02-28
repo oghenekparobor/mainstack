@@ -17,6 +17,7 @@ class PreviewImageCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+      key: ValueKey('image_element_${iem.id}'),
       width: double.infinity,
       height: 200.h,
       child: PageView(

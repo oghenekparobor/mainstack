@@ -15,6 +15,7 @@ class PreviewImageSingle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      key: ValueKey('image_element_${iem.id}'),
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         if (iem.hasHeader)
