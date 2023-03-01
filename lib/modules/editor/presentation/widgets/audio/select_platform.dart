@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mainstack/app/app.dart';
 import 'package:mainstack/config/theme/theme.dart';
 import 'package:mainstack/core/widgets/spacer/yspacer.dart';
+import 'package:mainstack/modules/editor/presentation/notifier-service/element_service.dart';
+import 'package:provider/provider.dart';
 
 class SelectAudioPlatform extends StatefulWidget {
   const SelectAudioPlatform({super.key});
@@ -13,36 +15,6 @@ class SelectAudioPlatform extends StatefulWidget {
 }
 
 class _SelectAudioPlatformState extends State<SelectAudioPlatform> {
-  var current = 0;
-
-  List platform = [
-    {
-      'label': 'Spotify',
-      'icon':
-          'https://www.freepnglogos.com/uploads/spotify-logo-png/spotify-icon-green-logo-8.png',
-    },
-    {
-      'label': 'Soundcloud',
-      'icon':
-          'https://www.freepnglogos.com/uploads/soundcloud-logo-png/soundcloud-logo-soundcloud-saved-cash-infusion-kerry-trainor-becomes-ceo-deadline-7.png',
-    },
-    {
-      'label': 'Apple Music',
-      'icon':
-          'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Apple_Music_icon.svg/2048px-Apple_Music_icon.svg.png',
-    },
-    {
-      'label': 'Youtube Music',
-      'icon':
-          'https://static.vecteezy.com/system/resources/previews/017/396/813/non_2x/youtube-music-icon-free-png.png',
-    },
-    {
-      'label': 'Tidal',
-      'icon':
-          'https://www.pngitem.com/pimgs/m/133-1336160_tidal-icon-listen-on-tidal-logo-hd-png.png',
-    }
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -56,48 +28,52 @@ class _SelectAudioPlatformState extends State<SelectAudioPlatform> {
           ),
         ),
         const YSpacer(),
-        Wrap(
-          children: [
-            for (var i = 0; i < platform.length; i++)
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    current = i;
-                  });
-                },
-                child: Container(
-                  height: 80.h,
-                  width: size.width * .24.w,
-                  margin: EdgeInsets.only(right: 4.w, left: 4.w, bottom: 8.w),
-                  decoration: BoxDecoration(
-                    color: i == current ? Colors.red.shade50 : null,
-                    borderRadius: BorderRadius.circular(10.r),
-                    border: Border.all(
-                      width: .5.w,
-                      color: i == current
-                          ? Colors.redAccent
-                          : Colors.grey.shade300,
+        Consumer<ElementNotifer>(
+          builder: (_, value, __) => Wrap(
+            children: [
+              for (var i = 0; i < value.audioPlatform.length; i++)
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      value.selectedAudioPlatform = i;
+                    });
+                  },
+                  child: Container(
+                    height: 80.h,
+                    width: size.width * .24.w,
+                    margin: EdgeInsets.only(right: 4.w, left: 4.w, bottom: 8.w),
+                    decoration: BoxDecoration(
+                      color: i == value.selectedAudioPlatform
+                          ? Colors.red.shade50
+                          : null,
+                      borderRadius: BorderRadius.circular(10.r),
+                      border: Border.all(
+                        width: .5.w,
+                        color: i == value.selectedAudioPlatform
+                            ? Colors.redAccent
+                            : Colors.grey.shade300,
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        FancyShimmerImage(
+                          imageUrl: value.audioPlatform[i]['icon'],
+                          width: 24.w,
+                          height: 24.h,
+                          boxFit: BoxFit.contain,
+                        ),
+                        const YSpacer(value: 2),
+                        Text(
+                          value.audioPlatform[i]['label'],
+                          style: theme.textTheme.titleMedium,
+                        ),
+                      ],
                     ),
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      FancyShimmerImage(
-                        imageUrl: platform[i]['icon'],
-                        width: 24.w,
-                        height: 24.h,
-                        boxFit: BoxFit.contain,
-                      ),
-                      const YSpacer(value: 2),
-                      Text(
-                        platform[i]['label'],
-                        style: theme.textTheme.titleMedium,
-                      ),
-                    ],
-                  ),
                 ),
-              ),
-          ],
+            ],
+          ),
         ),
         const YSpacer(value: 20),
       ],

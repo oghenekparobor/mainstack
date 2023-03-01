@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:mainstack/config/theme/theme.dart';
 import 'package:mainstack/core/util/dialog.dart';
 import 'package:mainstack/modules/editor/data/model/image/image_element.dart';
 import 'package:mainstack/modules/editor/presentation/notifier-service/element_service.dart';
 import 'package:mainstack/modules/editor/presentation/views/image/add_image_preview.dart';
 import 'package:mainstack/modules/editor/presentation/widgets/element_template.dart';
+
+import '../../../../../core/widgets/spacer/yspacer.dart';
 
 class ImageElement extends StatelessWidget {
   const ImageElement({
@@ -17,8 +20,23 @@ class ImageElement extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElementTemplate(
       label: 'Image',
-      child: es.layout(iem),
-      delete: () => es.removeImageField(iem.id),
+      child: Column(
+        children: [
+          if (iem.hasHeader)
+            Text(
+              iem.title,
+              style: theme.textTheme.displayMedium,
+            ),
+          if (iem.hasHeader)
+            Text(
+              iem.desc,
+              style: theme.textTheme.bodyLarge,
+            ),
+          const YSpacer(value: 20),
+          es.layout(iem),
+        ],
+      ),
+      delete: () => es.removeElement(iem.id),
       duplicate: () => es.duplicateImage(iem),
       edit: () {
         es.imageHasHeader = iem.hasHeader;

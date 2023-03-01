@@ -37,7 +37,7 @@ class EditorAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         MyFilledButton(
           label: 'Preview',
-          onTap: () => nav.pushNamed(Routes.preview),
+          onTap: () => preview(),
         ),
         const XSpacer(),
       ],
@@ -46,4 +46,27 @@ class EditorAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => Size.fromHeight(60.h);
+
+  preview() {
+    Future.delayed(const Duration(milliseconds: 2500), () {
+      nav.pop();
+      nav.pushNamed(Routes.preview);
+    });
+
+    showDialog(
+      context: navKey.currentContext!,
+      builder: (_) => Center(
+        child: Container(
+          width: 50.w,
+          height: 50.h,
+          padding: const EdgeInsets.all(15),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10.r),
+          ),
+          child: const CircularProgressIndicator(),
+        ),
+      ),
+    );
+  }
 }

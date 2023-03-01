@@ -12,6 +12,7 @@ import 'package:mainstack/modules/editor/presentation/notifier-service/header_se
 import 'package:mainstack/modules/editor/presentation/views/add-element/add_element.dart';
 import 'package:mainstack/modules/editor/presentation/views/header/header.dart';
 import 'package:mainstack/modules/editor/presentation/widgets/editor_appbar.dart';
+import 'package:mainstack/modules/editor/presentation/widgets/not_draggable.dart';
 import 'package:provider/provider.dart';
 
 class EditorHome extends StatefulWidget {
@@ -71,12 +72,24 @@ class _EditorHomeState extends State<EditorHome> {
           builder: (_, value, __) => ReorderableListView(
             padding: EdgeInsets.zero,
             physics: const ClampingScrollPhysics(),
-            onReorder: (oldIndex, newIndex) {},
+            onReorder: (oldIndex, newIndex) => es.rearrangeElements(
+              oldIndex: oldIndex,
+              newIndex: newIndex,
+              lenthOfWidgets: es.elements.length,
+              top: 1,
+              bottom: 1,
+            ),
             children: [
-              const Header(key: ValueKey('editor_header')),
+              const NotDraggable(
+                key: ValueKey('editor_header'),
+                child: Header(),
+              ),
               for (var i = 0; i < value.elements.length; i++)
                 value.showElement(value.elements[i]),
-              const YSpacer(value: 150, key: ValueKey('bottom_spacer')),
+              const NotDraggable(
+                key: ValueKey('bottom_spacer'),
+                child: YSpacer(value: 150),
+              ),
             ],
           ),
         ),

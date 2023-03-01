@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
           title: kAppName,
           theme: theme,
           home: child,
+          debugShowCheckedModeBanner: false,
           navigatorKey: navKey,
           builder: (context, child) {
             final query = MediaQuery.of(context);

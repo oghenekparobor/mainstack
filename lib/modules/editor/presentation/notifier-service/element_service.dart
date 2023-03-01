@@ -4,11 +4,13 @@ import 'package:mainstack/app/app.dart';
 import 'package:mainstack/core/util/element.dart';
 import 'package:mainstack/core/util/toast.dart';
 import 'package:mainstack/core/util/validator.dart';
+import 'package:mainstack/modules/editor/data/model/audio/audio.dart';
 import 'package:mainstack/modules/editor/data/model/audio/audio_element.dart';
 import 'package:mainstack/modules/editor/data/model/image/image.dart';
 import 'package:mainstack/modules/editor/data/model/image/image_element.dart';
 import 'package:mainstack/modules/editor/data/model/link/link.dart';
 import 'package:mainstack/modules/editor/data/model/link/link_element.dart';
+import 'package:mainstack/modules/editor/data/model/pdf/pdf.dart';
 import 'package:mainstack/modules/editor/data/model/pdf/pdf_element.dart';
 import 'package:mainstack/modules/editor/data/model/text/text.dart';
 import 'package:mainstack/modules/editor/data/model/text/text_element.dart';
@@ -684,6 +686,364 @@ class ElementNotifer with ChangeNotifier {
 
       var items = _images.removeAt(o);
       _images.insert(n, items);
+
+      notifyListeners();
+    }
+  }
+
+  // Audios
+  int selectedAudioPlatform = 0;
+
+  List audioPlatform = [
+    {
+      'label': 'Spotify',
+      'icon':
+          'https://www.freepnglogos.com/uploads/spotify-logo-png/spotify-icon-green-logo-8.png',
+    },
+    {
+      'label': 'Soundcloud',
+      'icon':
+          'https://www.freepnglogos.com/uploads/soundcloud-logo-png/soundcloud-logo-soundcloud-saved-cash-infusion-kerry-trainor-becomes-ceo-deadline-7.png',
+    },
+    {
+      'label': 'Apple Music',
+      'icon':
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Apple_Music_icon.svg/2048px-Apple_Music_icon.svg.png',
+    },
+    {
+      'label': 'Youtube Music',
+      'icon':
+          'https://static.vecteezy.com/system/resources/previews/017/396/813/non_2x/youtube-music-icon-free-png.png',
+    },
+    {
+      'label': 'Tidal',
+      'icon':
+          'https://www.pngitem.com/pimgs/m/133-1336160_tidal-icon-listen-on-tidal-logo-hd-png.png',
+    }
+  ];
+
+  final _audios = <AudioModel>[
+    AudioModel(
+      id: uuid.v1(),
+      link: '',
+      position: 0,
+    ),
+  ];
+
+  List<AudioModel> get audios => _audios;
+
+  void addAudio() {
+    _audios.add(AudioModel(
+      id: uuid.v1(),
+      link: '',
+      position: (_links.length + 1),
+    ));
+
+    notifyListeners();
+  }
+
+  void removeAudioField(id) {
+    _audios.removeWhere((e) => e.id == id);
+
+    notifyListeners();
+  }
+
+  void editAudio(List<AudioModel> am) {
+    _audios.clear();
+    _audios.addAll(am);
+
+    notifyListeners();
+  }
+
+  bool audioHasHeader = false;
+  String audioHeader = '';
+
+  bool validateAudio() {
+    if (audioHasHeader && audioHeader.isEmpty) {
+      MyToast().show('Please ensure link is not empty');
+
+      return false;
+    }
+
+    int error = 0;
+
+    if (_audios.isEmpty) {
+      return false;
+    } else {
+      if (_audios.any((e) => e.link.isEmpty)) {
+        error++;
+        MyToast().show('Please ensure image is not empty');
+
+        if (_audios.any((e) => !urlValidator(e.link))) {
+          error++;
+          MyToast().show('Please ensure link is valid');
+        }
+      }
+    }
+
+    return (error == 0);
+  }
+
+  void updateAudio(var key, var value, id) {
+    var item = _audios.firstWhere((e) => e.id == id);
+    var pos = _audios.indexOf(item);
+
+    var map = item.toJson();
+    map.update(key, (_) => value);
+
+    _audios.removeAt(pos);
+    _audios.insert(pos, AudioModel.fromJson(map));
+  }
+
+  void addAudioToElements(String? edit) {
+    if (edit != null) {
+      var item = _elements.firstWhere(
+        (e) => (e as AudioElementModel).id == edit,
+      ) as AudioElementModel;
+
+      int pos = _elements.indexOf(item);
+
+      var map = item.toJson();
+
+      var list = [];
+      for (var element in _audios) {
+        list.add(element.toJson());
+      }
+
+      map.update('audios', (value) => list);
+      // map.update(
+      //   'layout',
+      //   (value) => imgLayouts[selectedLayout]['label'],
+      // );
+      map.update('title', (value) => audioHeader);
+      map.update('hasHeader', (value) => audioHasHeader);
+
+      _elements.removeAt(pos);
+      _elements.insert(pos, AudioElementModel.fromJson(map));
+
+      audioHasHeader = false;
+      audioHeader = '';
+      selectedAudioPlatform = 0;
+
+      _audios.clear();
+      addAudio();
+
+      notifyListeners();
+    } else {
+      addElement(AudioElementModel(
+        id: uuid.v1(),
+        audios: [..._audios],
+        hasHeader: audioHasHeader,
+        title: audioHeader,
+        position: (_elements.length + 1),
+      ));
+
+      audioHasHeader = false;
+      audioHeader = '';
+      selectedAudioPlatform = 0;
+
+      _audios.clear();
+      addAudio();
+    }
+  }
+
+  void duplicateAudio(AudioElementModel lm) {
+    addElement(AudioElementModel(
+      id: uuid.v1(),
+      hasHeader: lm.hasHeader,
+      title: lm.title,
+      audios: lm.audios,
+      position: (lm.position + 1),
+    ));
+  }
+
+  void rearrangeAudios({
+    required int oldIndex,
+    required int newIndex,
+    required int lenthOfWidgets,
+    required int top,
+    required int bottom,
+  }) {
+    if (newIndex < top || newIndex >= (lenthOfWidgets + (top + bottom))) {
+    } else {
+      var o = (oldIndex - top);
+      var n = (newIndex - top);
+
+      if (n > o) n -= 1;
+
+      var items = _audios.removeAt(o);
+      _audios.insert(n, items);
+
+      notifyListeners();
+    }
+  }
+
+  // Pdfs
+  final _pdfs = <PdfModel>[
+    PdfModel(
+      id: uuid.v1(),
+      position: 0,
+      file: '',
+      title: '',
+    ),
+  ];
+
+  List<PdfModel> get pdfs => _pdfs;
+
+  void addPdf() {
+    _pdfs.add(PdfModel(
+      id: uuid.v1(),
+      position: (_links.length + 1),
+      file: '',
+      title: '',
+    ));
+
+    notifyListeners();
+  }
+
+  void removePdfField(id) {
+    _pdfs.removeWhere((e) => e.id == id);
+
+    notifyListeners();
+  }
+
+  void editPdf(List<PdfModel> pm) {
+    _pdfs.clear();
+    _pdfs.addAll(pm);
+
+    notifyListeners();
+  }
+
+  bool pdfHasHeader = false;
+  String pdfHeader = '';
+
+  bool validatePdf() {
+    if (pdfHasHeader && pdfHeader.isEmpty) {
+      MyToast().show('Please ensure header is not empty');
+
+      return false;
+    }
+
+    int error = 0;
+
+    if (_pdfs.isEmpty) {
+      return false;
+    } else {
+      if (_pdfs.any((e) => e.file.isEmpty)) {
+        error++;
+        MyToast().show('Please ensure image is not empty');
+      }
+    }
+
+    return (error == 0);
+  }
+
+  void updatePdf(var key, var value, id) {
+    var item = _pdfs.firstWhere((e) => e.id == id);
+    var pos = _pdfs.indexOf(item);
+
+    var map = item.toJson();
+    map.update(key, (_) => value);
+
+    _pdfs.removeAt(pos);
+    _pdfs.insert(pos, PdfModel.fromJson(map));
+  }
+
+  void addPdfToElements(String? edit) {
+    if (edit != null) {
+      var item = _elements.firstWhere(
+        (e) => (e as PdfElementModel).id == edit,
+      ) as PdfElementModel;
+
+      int pos = _elements.indexOf(item);
+
+      var map = item.toJson();
+
+      var list = [];
+      for (var element in _pdfs) {
+        list.add(element.toJson());
+      }
+
+      map.update('pdfs', (value) => list);
+      // map.update(
+      //   'layout',
+      //   (value) => imgLayouts[selectedLayout]['label'],
+      // );
+      map.update('content', (_) => pdfHeader);
+      map.update('hasHeader', (_) => pdfHasHeader);
+
+      _elements.removeAt(pos);
+      _elements.insert(pos, PdfElementModel.fromJson(map));
+
+      pdfHasHeader = false;
+      pdfHeader = '';
+
+      _pdfs.clear();
+      addPdf();
+
+      notifyListeners();
+    } else {
+      addElement(PdfElementModel(
+        id: uuid.v1(),
+        pdfs: [..._pdfs],
+        hasHeader: pdfHasHeader,
+        content: pdfHeader,
+      ));
+
+      pdfHasHeader = false;
+      pdfHeader = '';
+
+      _pdfs.clear();
+      addPdf();
+    }
+  }
+
+  void duplicatePdf(PdfElementModel lm) {
+    addElement(PdfElementModel(
+      id: uuid.v1(),
+      hasHeader: lm.hasHeader,
+      content: pdfHeader,
+      pdfs: lm.pdfs,
+    ));
+  }
+
+  void rearrangePdfs({
+    required int oldIndex,
+    required int newIndex,
+    required int lenthOfWidgets,
+    required int top,
+    required int bottom,
+  }) {
+    if (newIndex < top || newIndex >= (lenthOfWidgets + (top + bottom))) {
+    } else {
+      var o = (oldIndex - top);
+      var n = (newIndex - top);
+
+      if (n > o) n -= 1;
+
+      var items = _pdfs.removeAt(o);
+      _pdfs.insert(n, items);
+
+      notifyListeners();
+    }
+  }
+
+  void rearrangeElements({
+    required int oldIndex,
+    required int newIndex,
+    required int lenthOfWidgets,
+    required int top,
+    required int bottom,
+  }) {
+    if (newIndex < top || newIndex >= (lenthOfWidgets + (top + bottom))) {
+    } else {
+      var o = (oldIndex - top);
+      var n = (newIndex - top);
+
+      if (n > o) n -= 1;
+
+      var items = _elements.removeAt(o);
+      _elements.insert(n, items);
 
       notifyListeners();
     }

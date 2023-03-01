@@ -25,17 +25,44 @@ class PreviewAudioElement extends StatelessWidget {
           ),
         if (aem.hasHeader) const YSpacer(value: 50),
         for (var i in aem.audios)
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10.r),
-            child: FancyShimmerImage(
-              boxDecoration: BoxDecoration(
-                color: Colors.red.shade300,
-                borderRadius: BorderRadius.circular(10.r),
-              ),
-              boxFit: BoxFit.cover,
+          Padding(
+            padding: EdgeInsets.only(bottom: 10.h),
+            child: SizedBox(
               width: double.infinity,
               height: 200.h,
-              imageUrl: i.link,
+              child: Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10.r),
+                    child: FancyShimmerImage(
+                      boxDecoration: BoxDecoration(
+                        color: Colors.red.shade300,
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                      boxFit: BoxFit.cover,
+                      width: double.infinity,
+                      height: 200.h,
+                      imageUrl: i.link,
+                    ),
+                  ),
+                  Align(
+                    child: Container(
+                      width: 70.w,
+                      height: 50.h,
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                      alignment: Alignment.center,
+                      child: Icon(
+                        Icons.play_arrow,
+                        size: 32.sp,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
       ],
